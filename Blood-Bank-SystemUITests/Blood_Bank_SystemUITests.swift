@@ -95,6 +95,40 @@ final class Blood_Bank_SystemUITests: XCTestCase {
             XCTAssertTrue(app.staticTexts["Updated Name"].exists)
         }
 
+        func testSearchBloodDonors() throws {
+        // Assuming there's a text field to enter blood type and a button to search
+        let bloodTypeTextField = app.textFields["bloodTypeTextField"]
+        bloodTypeTextField.tap()
+        bloodTypeTextField.typeText("O+")
+        
+        let searchButton = app.buttons["searchButton"]
+        searchButton.tap()
+        
+        // Assuming there's a table view displaying search results
+        let donorsTableView = app.tables["donorsTableView"]
+        XCTAssertTrue(donorsTableView.cells.count > 0)
+        
+        // Additional assertions can be added to verify specific donor information
+    }
+    
+    func testMakeBloodDonationRequest() throws {
+        // Assuming there's a text field for requester name, blood type, and a button to request donation
+        let requesterNameTextField = app.textFields["requesterNameTextField"]
+        requesterNameTextField.tap()
+        requesterNameTextField.typeText("John Doe")
+        
+        let bloodTypeTextField = app.textFields["bloodTypeTextField"]
+        bloodTypeTextField.tap()
+        bloodTypeTextField.typeText("A-")
+        
+        let requestButton = app.buttons["requestButton"]
+        requestButton.tap()
+        
+        // Assuming there's a confirmation message or UI element after making the request
+        let confirmationLabel = app.staticTexts["confirmationLabel"]
+        XCTAssertTrue(confirmationLabel.exists)
+    }
+
         func testDonorInformation() throws {
             // Tap on the donor info button to navigate to the donor info screen
             app.buttons["donorInfoButton"].tap()
