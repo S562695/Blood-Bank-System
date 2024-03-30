@@ -77,6 +77,61 @@ final class Blood_Bank_SystemTests: XCTestCase {
             XCTAssertEqual(updateResult, .success, "Patient profile should be updated successfully")
         }
 
+
+// Struct representing a blood donor
+struct BloodDonor {
+    let name: String
+    let bloodType: String
+}
+
+// Struct representing a blood donation request
+struct BloodDonationRequest {
+    let requesterName: String
+    let bloodTypeNeeded: String
+}
+
+// Function to search for blood donors by blood type
+func findBloodDonors(by bloodType: String, donors: [BloodDonor]) -> [BloodDonor] {
+    let matchingDonors = donors.filter { $0.bloodType == bloodType }
+    return matchingDonors
+}
+
+// Function to make a blood donation request
+func makeBloodDonationRequest(request: BloodDonationRequest, donors: [BloodDonor]) -> Bool {
+    let potentialDonors = findBloodDonors(by: request.bloodTypeNeeded, donors: donors)
+    
+    // Logic for making the request, e.g., contacting potential donors
+    
+    return !potentialDonors.isEmpty
+}
+
+class BloodDonationTests: XCTestCase {
+    func testFindBloodDonors() {
+        let donors = [
+            BloodDonor(name: "lakshmi", bloodType: "O+"),
+            BloodDonor(name: "meghana", bloodType: "A-"),
+            BloodDonor(name: "meghala", bloodType: "AB+"),
+            BloodDonor(name: "Greeshma", bloodType: "O+")
+        ]
+        
+        let oPositiveDonors = findBloodDonors(by: "O+", donors: donors)
+        XCTAssertEqual(oPositiveDonors.count, 2)
+    }
+    
+    func testMakeBloodDonationRequest() {
+        let donors = [
+            BloodDonor(name: "lakshmi", bloodType: "O+"),
+            BloodDonor(name: "meghana", bloodType: "A-"),
+            BloodDonor(name: "meghala", bloodType: "AB+"),
+            BloodDonor(name: "Gresshma", bloodType: "O+")
+        ]
+        
+        let request = BloodDonationRequest(requesterName: "meghana", bloodTypeNeeded: "A-")
+        XCTAssertTrue(makeBloodDonationRequest(request: request, donors: donors))
+    }
+}
+
+
         // MARK: - Live Chat Tests
         
         func testLiveChat_SendsMessage_Success() {
